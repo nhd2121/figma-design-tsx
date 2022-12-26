@@ -1,0 +1,55 @@
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+
+  .left-side {
+    display: flex;
+    flex-direction: row;
+  }
+  .btn-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 12px 16px 12px 16px;
+    height: 100%;
+    border: none;
+    background-color: #fff;
+  }
+
+  .btn-table-header:hover {
+    cursor: pointer;
+  }
+
+  .right-side {
+    display: flex;
+    flex-direction: row;
+
+    .btn-create {
+      background: #0f62fe !important;
+      color: #fff;
+      width: 131px;
+    }
+
+    .btn-create:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+:where(.css-dev-only-do-not-override-9ntgx0).ant-table-wrapper
+  .ant-table-thead
+  > tr
+  > th {
+  background: #e0e0e0;
+}
+
+.icon-delete-table:hover,
+.icon-edit-table:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.modalEditingData {
+    text-align: center;
+}
