@@ -1,4 +1,16 @@
-export const TableDataLists = [
+export interface DataList {
+  STT?: number;
+  MaPhieu: string;
+  Nam: string;
+  CompanyCode: string;
+  PhongBan: string;
+  NguoiTao: string;
+  NgayTao: string;
+  TrangThai: string;
+  TrangThaiToTrinh: string;
+}
+
+export const TableDataLists: DataList[] = [
   {
     STT: 1,
     MaPhieu: "NSDTMB202301",
@@ -8,7 +20,7 @@ export const TableDataLists = [
     NguoiTao: "nhd21",
     NgayTao: "20/12/2022",
     TrangThai: "Mới tạo",
-    TrangThaiToTrinh: " ",
+    TrangThaiToTrinh: "Đã duyệt",
   },
   {
     STT: 2,
@@ -19,7 +31,7 @@ export const TableDataLists = [
     NguoiTao: "nhd21",
     NgayTao: "20/10/2022",
     TrangThai: "Chờ soát xét",
-    TrangThaiToTrinh: " ",
+    TrangThaiToTrinh: "Đã duyệt",
   },
   {
     STT: 3,

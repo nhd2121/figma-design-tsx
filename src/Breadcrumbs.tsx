@@ -8,7 +8,7 @@ const Breadcrumbs = () => {
   const BreadcrumbView = () => {
     const { pathname } = location;
     const pathnames = pathname.split("/").filter((item) => item);
-    const capatilize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+    const capatilize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
     return (
       <div className="breadcrumb-container">
         <Breadcrumb>

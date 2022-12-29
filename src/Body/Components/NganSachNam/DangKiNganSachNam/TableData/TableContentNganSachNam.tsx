@@ -1,6 +1,6 @@
 import "./TableContentNganSachNam.scss";
 import { Badge, Input, Modal, Table } from "antd";
-import { TableDataLists } from "./ListTableData.js";
+import { TableDataLists, DataList } from "./ListTableData";
 import {
   ChevronDown,
   Search,
@@ -19,16 +19,28 @@ const newData = {
   PhongBan: " ",
   NguoiTao: " ",
   NgayTao: " ",
-  TrangThai: [""],
-  TrangThaiToTrinh: [""],
+  TrangThai: "",
+  TrangThaiToTrinh: "",
+};
+
+export type editingData = {
+  STT?: number;
+  MaPhieu: string;
+  Nam: string;
+  CompanyCode: string;
+  PhongBan: string;
+  NguoiTao: string;
+  NgayTao: string;
+  TrangThai: string;
+  TrangThaiToTrinh: string;
 };
 
 export default function TableContentNganSachNam() {
-  const [dataSource, setDataSource] = useState(TableDataLists);
+  const [dataSource, setDataSource] = useState(TableDataLists as DataList[]);
   const [dataInput, setDataInput] = useState(newData);
   const [isOpenCreateForm, setOpenCreateForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [editingData, setEditingData] = useState(null);
+  const [editingData, setEditingData] = useState<editingData | null>(null);
 
   const openCreateForm = () => {
     setOpenCreateForm(true);
@@ -36,15 +48,15 @@ export default function TableContentNganSachNam() {
 
   const handleSubmit = () => {
     const cloneData = [...dataSource];
-    cloneData.push({ ...dataInput, STT: 100 });
+    const newIndex = cloneData.length + 1;
+    cloneData.push({ ...dataInput, STT: newIndex });
 
     setOpenCreateForm(false);
     setDataSource(cloneData);
     setDataInput(newData);
   };
 
-  const onDeleteData = (STT, e) => {
-    e.preventDefault();
+  const onDeleteData = (STT: number) => {
     const dataAfterDelete = dataSource.filter((data) => data.STT !== STT);
     Modal.confirm({
       title: "Chắc chắn xóa ?",
@@ -54,7 +66,7 @@ export default function TableContentNganSachNam() {
     });
   };
 
-  const onEditData = (record, e) => {
+  const onEditData = (record: any) => {
     setIsEditing(true);
     setEditingData({ ...record });
   };
@@ -69,7 +81,7 @@ export default function TableContentNganSachNam() {
       title: "STT",
       dataIndex: "STT",
       key: "STT",
-      render: (index) => {
+      render: (index: number) => {
         return index;
       },
     },
@@ -77,7 +89,7 @@ export default function TableContentNganSachNam() {
       title: "Mã phiếu",
       dataIndex: "MaPhieu",
       key: "MaPhieu",
-      render(text) {
+      render(text: string) {
         return {
           props: {
             style: { textDecoration: "underline" },
@@ -90,7 +102,7 @@ export default function TableContentNganSachNam() {
       title: "Năm",
       dataIndex: "Nam",
       key: "Nam",
-      render(text) {
+      render(text: string) {
         return {
           props: {
             style: { textDecoration: "underline" },
@@ -123,7 +135,7 @@ export default function TableContentNganSachNam() {
       title: "Trạng thái",
       dataIndex: "TrangThai",
       key: "TrangThai",
-      render: (TrangThai) => {
+      render: (TrangThai: string) => {
         return (
           <div>
             {(() => {
@@ -143,11 +155,11 @@ export default function TableContentNganSachNam() {
       title: "Trạng thái tờ trình",
       dataIndex: "TrangThaiToTrinh",
       key: "TrangThaiToTrinh",
-      render: (TrangThaiToTrinh) => (
+      render: (TrangThaiToTrinh: string) => (
         <span>
           <div key={TrangThaiToTrinh}>
             <Badge
-              status={TrangThaiToTrinh === "Đã duyệt" ? "success" : " "}
+              status={TrangThaiToTrinh === "Đã duyệt" ? "success" : "warning"}
               text={TrangThaiToTrinh}
             />
           </div>
@@ -157,19 +169,19 @@ export default function TableContentNganSachNam() {
     {
       title: "Action",
       key: "Action",
-      render: (record) => {
+      render: (record: any) => {
         return (
           <>
             <Edit
-              onClick={(e) => {
-                onEditData(record, e);
+              onClick={() => {
+                onEditData(record);
               }}
               style={{ color: "#0f62fe" }}
               className="icon-edit-table"
             />
             <TrashCan
-              onClick={(e) => {
-                onDeleteData(record.STT, e);
+              onClick={() => {
+                onDeleteData(record.STT);
               }}
               style={{ color: "red", marginLeft: 12 }}
               className="icon-delete-table"
@@ -230,9 +242,9 @@ export default function TableContentNganSachNam() {
               resetEditingForm();
             }}
             onOk={() => {
-              setDataSource((pre) => {
-                return pre.map((data) => {
-                  if (data.STT === editingData.STT) {
+              setDataSource((pre: any) => {
+                return pre.map((data: any) => {
+                  if (data.STT === editingData?.STT) {
                     return editingData;
                   } else {
                     return data;
@@ -246,7 +258,7 @@ export default function TableContentNganSachNam() {
               addonBefore="Mã Phiếu"
               value={editingData?.MaPhieu}
               onChange={(e) => {
-                setEditingData((pre) => {
+                setEditingData((pre: any) => {
                   return { ...pre, MaPhieu: e.target.value };
                 });
               }}
@@ -255,7 +267,7 @@ export default function TableContentNganSachNam() {
               addonBefore="Năm"
               value={editingData?.Nam}
               onChange={(e) => {
-                setEditingData((pre) => {
+                setEditingData((pre: any) => {
                   return { ...pre, Nam: e.target.value };
                 });
               }}
@@ -264,7 +276,7 @@ export default function TableContentNganSachNam() {
               addonBefore="Company Code"
               value={editingData?.CompanyCode}
               onChange={(e) => {
-                setEditingData((pre) => {
+                setEditingData((pre: any) => {
                   return { ...pre, CompanyCode: e.target.value };
                 });
               }}
@@ -273,7 +285,7 @@ export default function TableContentNganSachNam() {
               addonBefore="Phòng ban"
               value={editingData?.PhongBan}
               onChange={(e) => {
-                setEditingData((pre) => {
+                setEditingData((pre: any) => {
                   return { ...pre, PhongBan: e.target.value };
                 });
               }}
@@ -282,7 +294,7 @@ export default function TableContentNganSachNam() {
               addonBefore="Người tạo"
               value={editingData?.NguoiTao}
               onChange={(e) => {
-                setEditingData((pre) => {
+                setEditingData((pre: any) => {
                   return { ...pre, NguoiTao: e.target.value };
                 });
               }}
@@ -291,7 +303,7 @@ export default function TableContentNganSachNam() {
               addonBefore="Ngày tạo"
               value={editingData?.NgayTao}
               onChange={(e) => {
-                setEditingData((pre) => {
+                setEditingData((pre: any) => {
                   return { ...pre, NgayTao: e.target.value };
                 });
               }}
@@ -300,7 +312,7 @@ export default function TableContentNganSachNam() {
               addonBefore="Trạng thái"
               value={editingData?.TrangThai}
               onChange={(e) => {
-                setEditingData((pre) => {
+                setEditingData((pre: any) => {
                   return { ...pre, TrangThai: e.target.value };
                 });
               }}
@@ -309,7 +321,7 @@ export default function TableContentNganSachNam() {
               addonBefore="Trạng thái tờ trình"
               value={editingData?.TrangThaiToTrinh}
               onChange={(e) => {
-                setEditingData((pre) => {
+                setEditingData((pre: any) => {
                   return { ...pre, TrangThaiToTrinh: e.target.value };
                 });
               }}

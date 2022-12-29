@@ -1,9 +1,13 @@
 import { Logout, LogoGithub } from "@carbon/icons-react";
 import "./UserAvatarLogoDropdown.scss";
 
-export default function UserAvatarLogoDropdown({ dropdown }) {
+type Props = {
+  dropdown: any
+}
+
+export default function UserAvatarLogoDropdown(props: Props) {
   return (
-    <div className={`dropdown-avatar-logo ${dropdown ? "show" : ""}`}>
+    <div className={`dropdown-avatar-logo ${props.dropdown ? "show" : ""}`}>
       <div className="user-infor-and-role">
         <div className="role">Administrator</div>
         <div className="user-avatar">

@@ -1,8 +1,8 @@
 import topLogoNavbar from "../assets/top-logo-navbar.png";
 import "./Navbar.scss";
-import MenuItems from "./MenuItems.jsx";
-import MenuItemRightSide from "./MenuItemRightSide.jsx";
-import { menuItems } from "./ListMenuItems.js";
+import MenuItems from "./MenuItems";
+import MenuItemRightSide from "./MenuItemRightSide";
+import { ItemMenus, menuItems } from "./ListMenuItems";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
@@ -14,7 +14,7 @@ export default function Navbar() {
         </Link>
         <nav>
           <ul className="items">
-            {menuItems.map((menu, index) => {
+            {menuItems.map((menu: ItemMenus, index) => {
               const depthLevel = 0;
               return (
                 <MenuItems items={menu} key={index} depthLevel={depthLevel} />

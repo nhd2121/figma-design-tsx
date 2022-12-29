@@ -1,11 +1,11 @@
-import Dropdown from "./Dropdown.jsx";
+import Dropdown from "./Dropdown";
 import "./Navbar.scss";
 import "./MenuItem.scss";
 import { ChevronDown, ChevronUp } from "@carbon/icons-react";
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-export default function MenuItems({ items, depthLevel }) {
+export default function MenuItems(props: any) {
   const [dropdown, setDropdown] = useState(false);
 
   return (
@@ -15,38 +15,38 @@ export default function MenuItems({ items, depthLevel }) {
       onMouseLeave={() => setDropdown(false)}
       onClick={() => setDropdown(false)}
     >
-      {items.submenu ? (
+      {props.items.submenu ? (
         <>
           <NavLink
-            to={`${items.url}`}
+            to={`${props.items.url}`}
             className={`btn-item left-option ${
-              depthLevel > 0 ? "dropdown-btn-item" : ""
+              props.depthLevel > 0 ? "dropdown-btn-item" : ""
             }`}
             type="button"
             aria-haspopup="menu"
             aria-expanded={dropdown ? "true" : "false"}
           >
-            {items.title}{" "}
+            {props.items.title}{" "}
             {dropdown ? (
               <ChevronUp className="icon-left-menu" />
             ) : (
               <ChevronDown className="icon-left-menu" />
             )}
-            {depthLevel > 0 ? "" : <span className="arrow" />}
+            {props.depthLevel > 0 ? "" : <span className="arrow" />}
           </NavLink>
           <Dropdown
-            submenus={items.submenu}
+            submenus={props.items.submenu}
             dropdown={dropdown}
-            depthLevel={depthLevel}
+            depthLevel={props.depthLevel || 0}
           />
         </>
       ) : (
         <Link
-          to={`${items.url}`}
+          to={`${props.items.url}`}
           className="left-option-menu btn-item"
           type="button"
         >
-          {items.title}
+          {props.items.title}
         </Link>
       )}
     </li>

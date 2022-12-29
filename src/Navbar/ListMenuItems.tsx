@@ -1,4 +1,11 @@
-export const menuItems = [
+export interface ItemMenus {
+  title: string;
+  url: string;
+  submenu?: ItemMenus[];
+  depthLevel?: number;
+}
+
+export const menuItems: ItemMenus[] = [
   {
     title: "Ngân sách năm",
     url: "/NganSachNam",
